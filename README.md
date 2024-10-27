@@ -1,2 +1,2 @@
 # firstwebapp
-Built Ease : This is a E-learning platform
+EduHub : This is a E-learning platform
