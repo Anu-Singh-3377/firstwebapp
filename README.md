@@ -1,2 +1,2 @@
 # firstwebapp
-EduHub : This is a E-learning platform
+Educa. : This is a E-learning platform.The Educa. has two main parts: the backend (the behind-the-scenes system that handles data and logic) and the frontend (what users see and interact with). The backend manages tasks like logging in, saving user information, and storing course details. The frontend shows the website layout, buttons, and forms for users to interact with. Key features include user accounts, adding and joining courses, and tracking learning progress.
