@@ -1,0 +1,9 @@
+<?xml version="1.0" encodingUTF-8"<classpath>
+	<classpathentry excluding="**/node_modules/*|/*.min.js|**/bower_components/*" kind="src" pathsrc/mainapp	
+  <classpathentry kind="con pathorg.eclipse.wst.jsdt.launching.JRE_CONTAINER<classpathentry kind="con" path="org.eclipsest.jsdt.launching.WebProject">
+	<attributes>
+			<attribute namehide" value="true"/>
+		</attributes>
+	</classpath>
+	<classpath kind="" path="org.eclipse.wst.jsdting.baseBrowserLibrary	<classpathentry kind="output" path=""/>
+</classpath>
