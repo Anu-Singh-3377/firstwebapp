@@ -1,0 +1,30 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+import dao.UserDAO;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+class UserDAOTest {
+    UserDAO userDAO = new UserDAO();
+
+    UserDAOTest() {
+    }
+
+    @Test
+    void selectUser_testcase1() {
+        Assertions.assertNotNull(this.userDAO.selectUser(1));
+    }
+
+    @Test
+    void selectAllUser_testcase1() {
+        Assertions.assertTrue(this.userDAO.selectAllUsers().size() > 0);
+    }
+
+    @Test
+    void sdeletelUser_testcase1() {
+        Assertions.assertFalse(this.userDAO.deleteUser(56));
+    }
+}
