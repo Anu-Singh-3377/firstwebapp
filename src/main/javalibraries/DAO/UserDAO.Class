@@ -1,0 +1,262 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import model.User;
+
+public class UserDAO {
+    private String jdbcURL = "jdbc:mysql://localhost:3306/userdb";
+    private String jdbcUserName = "root";
+    private String jdbcPassword = "root";
+    private static final String INSERT_USERS_SQL = "INSERT INTO users(uname,email,country,passwd) VALUES (?,?,?,?);";
+    private static final String SELECT_USER_BY_ID = "SELECT * FROM users where id=?;";
+    private static final String SELECT_ALL_USERS = "select * from users;";
+    private static final String DELETE_USERS_SQL = "delete from users where id=?;";
+    private static final String UPDATE_USERS_SQL = "update users set uname=?, email=?, country=? where id=?;";
+
+    public UserDAO() {
+    }
+
+    public Connection getConnection() {
+        Connection connection = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(this.jdbcURL, this.jdbcUserName, this.jdbcPassword);
+        } catch (SQLException var3) {
+            SQLException e = var3;
+            e.printStackTrace();
+        } catch (ClassNotFoundException var4) {
+            ClassNotFoundException e = var4;
+            e.printStackTrace();
+        } catch (Exception var5) {
+            Exception e = var5;
+            e.printStackTrace();
+        }
+
+        return connection;
+    }
+
+    public void insertUser(User user) {
+        UserDAO dao = new UserDAO();
+
+        try {
+            Throwable var16 = null;
+            Object var4 = null;
+
+            try {
+                Connection connection = dao.getConnection();
+
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users(uname,email,country,passwd) VALUES (?,?,?,?);");
+                    preparedStatement.setString(1, user.getName());
+                    preparedStatement.setString(2, user.getEmail());
+                    preparedStatement.setString(3, user.getCountry());
+                    preparedStatement.setString(4, user.getPassword());
+                    preparedStatement.executeUpdate();
+                } finally {
+                    if (connection != null) {
+                        connection.close();
+                    }
+
+                }
+            } catch (Throwable var14) {
+                if (var16 == null) {
+                    var16 = var14;
+                } else if (var16 != var14) {
+                    var16.addSuppressed(var14);
+                }
+
+                throw var16;
+            }
+        } catch (SQLException var15) {
+            SQLException e = var15;
+            e.printStackTrace();
+        }
+
+    }
+
+    public User selectUser(int id) {
+        User user = new User();
+        UserDAO dao = new UserDAO();
+
+        try {
+            Throwable var4 = null;
+            Object var5 = null;
+
+            try {
+                Connection connection = dao.getConnection();
+
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users where id=?;");
+                    preparedStatement.setInt(1, id);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    while(resultSet.next()) {
+                        user.setId(id);
+                        user.setName(resultSet.getString("uname"));
+                        user.setEmail(resultSet.getString("email"));
+                        user.setCountry(resultSet.getString("country"));
+                        user.setPassword(resultSet.getString("passwd"));
+                    }
+                } finally {
+                    if (connection != null) {
+                        connection.close();
+                    }
+
+                }
+            } catch (Throwable var16) {
+                if (var4 == null) {
+                    var4 = var16;
+                } else if (var4 != var16) {
+                    var4.addSuppressed(var16);
+                }
+
+                throw var4;
+            }
+        } catch (SQLException var17) {
+        }
+
+        return user;
+    }
+
+    public List<User> selectAllUsers() {
+        List<User> users = new ArrayList();
+        UserDAO dao = new UserDAO();
+
+        try {
+            Throwable var22 = null;
+            Object var4 = null;
+
+            try {
+                Connection connection = dao.getConnection();
+
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("select * from users;");
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    while(resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String uname = resultSet.getString("uname");
+                        String email = resultSet.getString("email");
+                        String country = resultSet.getString("country");
+                        String password = resultSet.getString("passwd");
+                        users.add(new User(id, uname, email, country, password));
+                    }
+                } finally {
+                    if (connection != null) {
+                        connection.close();
+                    }
+
+                }
+            } catch (Throwable var20) {
+                if (var22 == null) {
+                    var22 = var20;
+                } else if (var22 != var20) {
+                    var22.addSuppressed(var20);
+                }
+
+                throw var22;
+            }
+        } catch (SQLException var21) {
+            SQLException e = var21;
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    public boolean deleteUser(int id) {
+        boolean status = false;
+        UserDAO dao = new UserDAO();
+
+        try {
+            Throwable var17 = null;
+            Object var5 = null;
+
+            try {
+                Connection connection = dao.getConnection();
+
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("delete from users where id=?;");
+                    preparedStatement.setInt(1, id);
+                    status = preparedStatement.execute();
+                } finally {
+                    if (connection != null) {
+                        connection.close();
+                    }
+
+                }
+            } catch (Throwable var15) {
+                if (var17 == null) {
+                    var17 = var15;
+                } else if (var17 != var15) {
+                    var17.addSuppressed(var15);
+                }
+
+                throw var17;
+            }
+        } catch (SQLException var16) {
+            SQLException e = var16;
+            e.printStackTrace();
+        }
+
+        return status;
+    }
+
+    public boolean updateUser(User user) {
+        boolean status = false;
+        UserDAO dao = new UserDAO();
+
+        try {
+            Throwable var17 = null;
+            Object var5 = null;
+
+            try {
+                Connection connection = dao.getConnection();
+
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement("update users set uname=?, email=?, country=? where id=?;");
+                    preparedStatement.setString(1, user.getName());
+                    preparedStatement.setString(2, user.getEmail());
+                    preparedStatement.setString(3, user.getCountry());
+                    preparedStatement.setInt(4, user.getId());
+                    status = preparedStatement.executeUpdate() > 0;
+                } finally {
+                    if (connection != null) {
+                        connection.close();
+                    }
+
+                }
+            } catch (Throwable var15) {
+                if (var17 == null) {
+                    var17 = var15;
+                } else if (var17 != var15) {
+                    var17.addSuppressed(var15);
+                }
+
+                throw var17;
+            }
+        } catch (SQLException var16) {
+            SQLException e = var16;
+            System.out.println(e.getMessage());
+        }
+
+        return status;
+    }
+
+    public static void main(String[] args) {
+        UserDAO dao = new UserDAO();
+        User user = dao.selectUser(1);
+        user.setName("Anushka");
+        user.setCountry("India");
+        user.setEmail("anu@abc.com");
+        Boolean status = dao.updateUser(user);
+        System.out.println(status);
+    }
+}
